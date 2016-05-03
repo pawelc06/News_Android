@@ -67,6 +67,7 @@ public class MainActivity extends FragmentActivity {
     private int mProgressStatus1 = 0;
 
     private Handler mHandler = new Handler();
+    public String meteoURL;
 
 
     // Reference to the fragment showing events, so we can clear it with a button
@@ -84,14 +85,18 @@ public class MainActivity extends FragmentActivity {
         mProgress1.setVisibility(View.INVISIBLE);
         mProgress2.setVisibility(View.INVISIBLE);
 
+
+        meteoURL = DateTimeUtil.getDateInURL();
+
         imageView1 = (ImageView) findViewById(R.id.imageView1);
 
-        /*
-        new DownloadImageTask((ImageView) findViewById(R.id.imageView1)) .execute("http://www.meteo.pl/um/metco/mgram_pict.php?ntype=0u&fdate=2016042406&row=406&col=250&lang=pl");
-        new DownloadImageTask((ImageView) findViewById(R.id.imageView2)) .execute("http://pogodynka.pl/http/assets/products/main_page_maps/day_v2_radarmode_0000-00-00d.jpg#0.007399700165709233");
+
+        new DownloadImageTaskProgress(imageView1,mProgress1) .execute("http://www.meteo.pl/um/metco/mgram_pict.php?ntype=0u&fdate=2016042406&row=406&col=250&lang=pl");
+
+        new DownloadImageTaskProgress((ImageView) findViewById(R.id.imageView2),mProgress2) .execute("http://pogodynka.pl/http/assets/products/main_page_maps/day_v2_radarmode_0000-00-00d.jpg#0.007399700165709233");
 
         new GetTempTask((TextView) findViewById(R.id.outTemperatureView)) .execute("http://192.168.2.120/gettemp.cgi?format=json");
-        */
+
 
 
     }
@@ -105,7 +110,7 @@ public class MainActivity extends FragmentActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        String meteoURL;
+
         final AsyncTask dt1, dt2;
 
         switch (item.getItemId()) {
@@ -120,11 +125,14 @@ public class MainActivity extends FragmentActivity {
 
 
                 //new DownloadTask().execute("http://www.meteo.pl/um/metco/mgram_pict.php?ntype=0u&fdate=2016020706&row=406&col=250&lang=pl");
-                //new DownloadImageTask((ImageView) findViewById(R.id.imageView1)) .execute("http://www.meteo.pl/um/metco/mgram_pict.php?ntype=0u&fdate=2016042406&row=406&col=250&lang=pl");
-                dt1 = new DownloadImageTask((ImageView) findViewById(R.id.imageView1)).execute(meteoURL);
+                //new DownloadImageTaskProgress((ImageView) findViewById(R.id.imageView1)) .execute("http://www.meteo.pl/um/metco/mgram_pict.php?ntype=0u&fdate=2016042406&row=406&col=250&lang=pl");
+
+                dt1 = new DownloadImageTaskProgress((ImageView) findViewById(R.id.imageView1),mProgress1).execute(meteoURL);
+                //dt1 = new DownloadImageTaskProgress((ImageView) findViewById(R.id.imageView1),mProgress1).execute("http://www.meteo.pl/um/metco/mgram_pict.php?ntype=0u&fdate=2016050306&row=406&col=250&lang=pl");
 
 
-                new DownloadImageTask((ImageView) findViewById(R.id.imageView2)).execute("http://pogodynka.pl/http/assets/products/main_page_maps/day_v2_radarmode_0000-00-00d.jpg#0.007399700165709233");
+                //new DownloadImageTask((ImageView) findViewById(R.id.imageView2)).execute("http://pogodynka.pl/http/assets/products/main_page_maps/day_v2_radarmode_0000-00-00d.jpg#0.007399700165709233");
+                new DownloadImageTaskProgress((ImageView) findViewById(R.id.imageView2),mProgress2).execute("http://pogodynka.pl/http/assets/products/main_page_maps/day_v2_radarmode_0000-00-00d.jpg#0.007399700165709233");
 
                 new GetTempTask((TextView) findViewById(R.id.outTemperatureView)).execute("http://192.168.0.120/gettemp.cgi?format=json");
 
@@ -206,13 +214,22 @@ public class MainActivity extends FragmentActivity {
     }
 
 
-/*
-    private class DownloadImageTask extends AsyncTask<String, String, Bitmap> {
+
+    private class DownloadImageTaskProgress extends AsyncTask<String, Integer, Bitmap> {
+
+        ImageView bmImage;
+        ProgressBar mPb;
+
+        public DownloadImageTaskProgress(ImageView iv, ProgressBar pb){
+            this.bmImage = iv;
+            this.mPb = pb;
+        }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            mProgress1.setVisibility(View.VISIBLE);
+            mPb.setVisibility(View.VISIBLE);
+            //params[0].setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -223,6 +240,8 @@ public class MainActivity extends FragmentActivity {
                 int increment;
                 byte[] data;
                 InputStream in = null;
+                ByteArrayOutputStream outStream = null;
+
                 int response;
                 URL url = new URL(params[0]);
                 URLConnection conn = url.openConnection();
@@ -238,33 +257,56 @@ public class MainActivity extends FragmentActivity {
                     if (response == HttpURLConnection.HTTP_OK) {
                         in = httpConn.getInputStream();
                     }
-                    int length = httpConn.getContentLength();
+
+
+                    //int length = httpConn.getContentLength();
+                    int length = 200000;
 
                     data = new byte[length];
                     increment = length / 100;
-                    ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+                    outStream = new ByteArrayOutputStream();
                     int count = -1;
                     int progress = 0;
 
                     while ((count = in.read(data, 0, increment)) != -1) {
                         progress += count;
-                        publishProgress("" + (int) ((progress * 100) / length));
+                        publishProgress( (int) ((progress * 100) / length));
+                        //publishProgress( (int) progress);
+
                         outStream.write(data, 0, count);
                     }
                     bitmap = BitmapFactory.decodeByteArray(
-                            outStream.toByteArray(), 0, data.length);
-                    in.close();
-                    outStream.close();
+                            outStream.toByteArray(), 0, progress);
+
 
                 } catch (Exception ex) {
                     Log.d("Networking", ex.getLocalizedMessage());
                     throw new IOException("Error connecting");
+                } finally{
+                    in.close();
+                    outStream.close();
                 }
 
             } catch (Exception e) {
                 Log.e("Error: ", e.getMessage());
             }
             return bitmap;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            // Executes whenever publishProgress is called from doInBackground
+            // Used to update the progress indicator
+            mPb.setProgress(values[0]);
+
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            // This method is executed in the UIThread
+            // with access to the result of the long running task
+            this.bmImage.setImageBitmap(result);
+            // Hide the progress bar
+            mPb.setVisibility(ProgressBar.INVISIBLE);
         }
 
 
@@ -275,7 +317,7 @@ public class MainActivity extends FragmentActivity {
 
     }
 
-
+}
 
 
 

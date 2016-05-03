@@ -15,11 +15,16 @@ final public class DateTimeUtil {
         Date date = new Date();
         strDate = dateFormat.format(date);
 
+
+        hourStr = "06";
+
+        /*
         if(date.getHours() < 12){
             hourStr = "06";
         } else {
             hourStr = "12";
         }
+        */
 
         strURLDate = "http://www.meteo.pl/um/metco/mgram_pict.php?ntype=0u&fdate=" + strDate + hourStr + "&row=406&col=250&lang=pl";
 
