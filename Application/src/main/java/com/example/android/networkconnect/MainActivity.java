@@ -91,7 +91,7 @@ public class MainActivity extends FragmentActivity {
         imageView1 = (ImageView) findViewById(R.id.imageView1);
 
 
-        new DownloadImageTaskProgress(imageView1,mProgress1) .execute("http://www.meteo.pl/um/metco/mgram_pict.php?ntype=0u&fdate=2016042406&row=406&col=250&lang=pl");
+        new DownloadImageTaskProgress((ImageView) findViewById(R.id.imageView1),mProgress1).execute(meteoURL);
 
         new DownloadImageTaskProgress((ImageView) findViewById(R.id.imageView2),mProgress2) .execute("http://pogodynka.pl/http/assets/products/main_page_maps/day_v2_radarmode_0000-00-00d.jpg#0.007399700165709233");
 
