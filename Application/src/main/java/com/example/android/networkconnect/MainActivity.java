@@ -95,7 +95,7 @@ public class MainActivity extends FragmentActivity {
 
         new DownloadImageTaskProgress((ImageView) findViewById(R.id.imageView2),mProgress2) .execute("http://pogodynka.pl/http/assets/products/main_page_maps/day_v2_radarmode_0000-00-00d.jpg#0.007399700165709233");
 
-        new GetTempTask((TextView) findViewById(R.id.outTemperatureView)) .execute("http://192.168.2.120/gettemp.cgi?format=json");
+        new GetTempTask((TextView) findViewById(R.id.outTemperatureView)) .execute("http://192.168.0.120/gettemp.cgi?format=json");
 
 
 
@@ -118,8 +118,7 @@ public class MainActivity extends FragmentActivity {
             // raw HTML from www.google.com.
             case R.id.fetch_action:
 
-                TextView tv = (TextView) findViewById(R.id.outTemperatureView);
-                tv.setText("Odbieram dane...");
+
 
                 meteoURL = DateTimeUtil.getDateInURL();
 
@@ -151,6 +150,14 @@ public class MainActivity extends FragmentActivity {
 
         public GetTempTask(TextView tv) {
             this.txtView = tv;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            TextView tv = (TextView) findViewById(R.id.outTemperatureView);
+            tv.setText("Odbieram dane...");
+
         }
 
         protected String doInBackground(String... urls) {
@@ -233,64 +240,17 @@ public class MainActivity extends FragmentActivity {
         }
 
         @Override
-        protected Bitmap doInBackground(String... params) {
-            Bitmap bitmap = null;
+        protected Bitmap doInBackground(String... urls) {
+            String urldisplay = urls[0];
+            Bitmap mIcon11 = null;
             try {
-
-                int increment;
-                byte[] data;
-                InputStream in = null;
-                ByteArrayOutputStream outStream = null;
-
-                int response;
-                URL url = new URL(params[0]);
-                URLConnection conn = url.openConnection();
-                if (!(conn instanceof HttpURLConnection))
-                    throw new IOException("Not an HTTP connection");
-                try {
-                    HttpURLConnection httpConn = (HttpURLConnection) conn;
-                    httpConn.setInstanceFollowRedirects(true);
-                    httpConn.setRequestMethod("GET");
-                    httpConn.connect();
-
-                    response = httpConn.getResponseCode();
-                    if (response == HttpURLConnection.HTTP_OK) {
-                        in = httpConn.getInputStream();
-                    }
-
-
-                    //int length = httpConn.getContentLength();
-                    int length = 200000;
-
-                    data = new byte[length];
-                    increment = length / 100;
-                    outStream = new ByteArrayOutputStream();
-                    int count = -1;
-                    int progress = 0;
-
-                    while ((count = in.read(data, 0, increment)) != -1) {
-                        progress += count;
-                        publishProgress( (int) ((progress * 100) / length));
-                        //publishProgress( (int) progress);
-
-                        outStream.write(data, 0, count);
-                    }
-                    bitmap = BitmapFactory.decodeByteArray(
-                            outStream.toByteArray(), 0, progress);
-
-
-                } catch (Exception ex) {
-                    Log.d("Networking", ex.getLocalizedMessage());
-                    throw new IOException("Error connecting");
-                } finally{
-                    in.close();
-                    outStream.close();
-                }
-
+                InputStream in = new java.net.URL(urldisplay).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
             } catch (Exception e) {
-                Log.e("Error: ", e.getMessage());
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
             }
-            return bitmap;
+            return mIcon11;
         }
 
         @Override
