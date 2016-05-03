@@ -55,13 +55,16 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:id="@+id/outTemperatureView"
-        android:height="60dp"
+        android:height="80dp"
         android:textSize="30dp"
-        android:width="500dp"
+        android:width="550dp"
         android:fontFamily="Verdana"
         android:layout_alignParentBottom="true"
         android:layout_toRightOf="@+id/imageView1"
-        android:layout_toEndOf="@+id/imageView1" />
+        android:layout_toEndOf="@+id/imageView1"
+        android:paddingLeft="20dp"
+        android:lines="2"
+        android:layout_alignParentTop="false" />
 
     <ProgressBar
         android:layout_width="wrap_content"

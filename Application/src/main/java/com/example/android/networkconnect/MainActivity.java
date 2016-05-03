@@ -68,11 +68,51 @@ public class MainActivity extends FragmentActivity {
 
     private Handler mHandler = new Handler();
     public String meteoURL;
+    public boolean appRunning=false;
 
 
     // Reference to the fragment showing events, so we can clear it with a button
     // as necessary.
     private LogFragment mLogFragment;
+
+    private void startTimerThread() {
+        final Handler handler = new Handler();
+        Runnable runnable = new Runnable() {
+            private long startTime = System.currentTimeMillis();
+            public void run() {
+                while (appRunning) {
+                    try {
+                        Thread.sleep(180000);
+                    }
+                    catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    handler.post(new Runnable(){
+                        public void run() {
+                            mProgress1 = (ProgressBar) findViewById(R.id.progressBarMeteo);
+                            mProgress2 = (ProgressBar) findViewById(R.id.progressBarPogodynka);
+
+                            mProgress1.setVisibility(View.INVISIBLE);
+                            mProgress2.setVisibility(View.INVISIBLE);
+
+
+                            meteoURL = DateTimeUtil.getDateInURL();
+
+
+
+                            new DownloadImageTaskProgress((ImageView) findViewById(R.id.imageView1),mProgress1).execute(meteoURL);
+
+                            new DownloadImageTaskProgress((ImageView) findViewById(R.id.imageView2),mProgress2) .execute("http://pogodynka.pl/http/assets/products/main_page_maps/day_v2_radarmode_0000-00-00d.jpg#0.007399700165709233");
+
+                            new GetTempTask((TextView) findViewById(R.id.outTemperatureView)) .execute("http://192.168.0.120/gettemp.cgi?format=json");
+
+                        }
+                    });
+                }
+            }
+        };
+        new Thread(runnable).start();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +128,6 @@ public class MainActivity extends FragmentActivity {
 
         meteoURL = DateTimeUtil.getDateInURL();
 
-        imageView1 = (ImageView) findViewById(R.id.imageView1);
 
 
         new DownloadImageTaskProgress((ImageView) findViewById(R.id.imageView1),mProgress1).execute(meteoURL);
@@ -97,7 +136,8 @@ public class MainActivity extends FragmentActivity {
 
         new GetTempTask((TextView) findViewById(R.id.outTemperatureView)) .execute("http://192.168.0.120/gettemp.cgi?format=json");
 
-
+        appRunning = true;
+        this.startTimerThread();
 
     }
 
@@ -123,11 +163,9 @@ public class MainActivity extends FragmentActivity {
                 meteoURL = DateTimeUtil.getDateInURL();
 
 
-                //new DownloadTask().execute("http://www.meteo.pl/um/metco/mgram_pict.php?ntype=0u&fdate=2016020706&row=406&col=250&lang=pl");
-                //new DownloadImageTaskProgress((ImageView) findViewById(R.id.imageView1)) .execute("http://www.meteo.pl/um/metco/mgram_pict.php?ntype=0u&fdate=2016042406&row=406&col=250&lang=pl");
 
                 dt1 = new DownloadImageTaskProgress((ImageView) findViewById(R.id.imageView1),mProgress1).execute(meteoURL);
-                //dt1 = new DownloadImageTaskProgress((ImageView) findViewById(R.id.imageView1),mProgress1).execute("http://www.meteo.pl/um/metco/mgram_pict.php?ntype=0u&fdate=2016050306&row=406&col=250&lang=pl");
+
 
 
                 //new DownloadImageTask((ImageView) findViewById(R.id.imageView2)).execute("http://pogodynka.pl/http/assets/products/main_page_maps/day_v2_radarmode_0000-00-00d.jpg#0.007399700165709233");
@@ -165,6 +203,7 @@ public class MainActivity extends FragmentActivity {
             String tempJson = null;
             String tempStr = null;
             String volStr = null;
+            String dateStr=null;
             InputStream in;
             TempSensorData tsd;
 
@@ -181,7 +220,9 @@ public class MainActivity extends FragmentActivity {
                 tsd = JsonTempParser.parseData(in);
                 tempStr = tsd.getTemp();
                 volStr = tsd.getVoltage();
-                tempStr = " Temp: " + tempStr + " \u00b0C   Bat:" + volStr;
+                dateStr = tsd.getTimeStamp();
+                tempStr = "Temp: " + tempStr + " \u00b0C                  Bat:" + volStr + "\r\n"+dateStr;
+
 
             } catch (Exception e) {
                 Log.e("Error", e.getMessage());
