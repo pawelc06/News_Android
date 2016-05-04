@@ -3,7 +3,7 @@
     abi="armeabi-v7a,armeabi"
     api-level="15"
     format="7"
-    timestamp="91281165472567" >
+    timestamp="92488599517536" >
 
     <task
         name="javac"
@@ -19,13 +19,13 @@
         duration="0" />
 
     <artifact
-        location="D:\android_studio_workspace\NetworkConnect\Application\build\outputs\apk\Application-debug.apk"
-        type="MAIN" />
+        location="D:\android_studio_workspace\NetworkConnect\Application\build\intermediates\res\resources-debug.ap_"
+        type="RESOURCES" />
 
-    <build timestamp="91281165472567" >
+    <build timestamp="92488599517536" >
         <artifact
-            location="D:\android_studio_workspace\NetworkConnect\Application\build\outputs\apk\Application-debug.apk"
-            type="MAIN" />
+            location="D:\android_studio_workspace\NetworkConnect\Application\build\intermediates\res\resources-debug.ap_"
+            type="RESOURCES" />
     </build>
 
 </instant-run>
