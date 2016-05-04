@@ -101,15 +101,11 @@ public class MainActivity extends FragmentActivity {
                             mProgress1.setVisibility(View.INVISIBLE);
                             mProgress2.setVisibility(View.INVISIBLE);
 
-                            DownloadHtmlTask dht= (DownloadHtmlTask) new DownloadHtmlTask(resHtml).execute("http://www.meteo.pl/um/ramka_um_city_pl.php");
-
-                            //while(resHtml == null );
-
-                            meteoURL = DateTimeUtil.getDateInURL(resHtml);
 
 
 
-                            new DownloadImageTaskProgress((ImageView) findViewById(R.id.imageView1),mProgress1).execute(meteoURL);
+
+                            new DownloadImageTaskFromHtml((ImageView) findViewById(R.id.imageView1),mProgress1).execute("http://www.meteo.pl/um/ramka_um_city_pl.php");
 
                             new DownloadImageTaskProgress((ImageView) findViewById(R.id.imageView2),mProgress2) .execute("http://pogodynka.pl/http/assets/products/main_page_maps/day_v2_radarmode_0000-00-00d.jpg#0.007399700165709233");
 
@@ -135,16 +131,7 @@ public class MainActivity extends FragmentActivity {
         mProgress2.setVisibility(View.INVISIBLE);
 
 
-        DownloadHtmlTask dht = (DownloadHtmlTask) new DownloadHtmlTask(resHtml).execute("http://www.meteo.pl/um/ramka_um_city_pl.php");
-
-        //while(resHtml == null );
-
-
-        meteoURL = DateTimeUtil.getDateInURL(resHtml);
-
-
-
-        new DownloadImageTaskProgress((ImageView) findViewById(R.id.imageView1),mProgress1).execute(meteoURL);
+        new DownloadImageTaskFromHtml((ImageView) findViewById(R.id.imageView1),mProgress1).execute("http://www.meteo.pl/um/ramka_um_city_pl.php");
 
         new DownloadImageTaskProgress((ImageView) findViewById(R.id.imageView2),mProgress2) .execute("http://pogodynka.pl/http/assets/products/main_page_maps/day_v2_radarmode_0000-00-00d.jpg#0.007399700165709233");
 
@@ -173,17 +160,7 @@ public class MainActivity extends FragmentActivity {
             case R.id.fetch_action:
 
 
-                DownloadHtmlTask dht = (DownloadHtmlTask) new DownloadHtmlTask(resHtml).execute("http://www.meteo.pl/um/ramka_um_city_pl.php");
-
-                while(resHtml == null );
-
-                meteoURL = DateTimeUtil.getDateInURL(resHtml);
-
-
-
-
-
-                dt1 = new DownloadImageTaskProgress((ImageView) findViewById(R.id.imageView1),mProgress1).execute(meteoURL);
+                new DownloadImageTaskFromHtml((ImageView) findViewById(R.id.imageView1),mProgress1).execute("http://www.meteo.pl/um/ramka_um_city_pl.php");
 
 
 
@@ -313,6 +290,92 @@ public class MainActivity extends FragmentActivity {
             return parStr;
         }
 
+    }
+
+    private class DownloadImageTaskFromHtml extends AsyncTask<String, Integer, Bitmap> {
+
+        ImageView bmImage;
+        ProgressBar mPb;
+
+        public DownloadImageTaskFromHtml(ImageView iv, ProgressBar pb){
+            this.bmImage = iv;
+            this.mPb = pb;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mPb.setVisibility(View.VISIBLE);
+            //params[0].setVisibility(View.VISIBLE);
+        }
+
+        protected Bitmap doInBackground(String... urls) {
+            String url = urls[0];
+            String urldisplay="";
+            Bitmap mIcon11 = null;
+            String htmlResponse="";
+            String params="";
+            InputStream in;
+
+            try {
+
+                in = new java.net.URL(url).openStream();
+
+
+                Reader reader = null;
+                reader = new InputStreamReader(in, "UTF-8");
+                char[] buffer = new char[4096];
+                reader.read(buffer);
+                htmlResponse = new String(buffer);
+
+               params = parseParams(htmlResponse);
+
+                meteoURL = DateTimeUtil.getDateInURL(params);
+
+
+                in = new java.net.URL(meteoURL).openStream();
+                mIcon11 = BitmapFactory.decodeStream(in);
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return mIcon11;
+        }
+
+        @Override
+        protected void onProgressUpdate(Integer... values) {
+            // Executes whenever publishProgress is called from doInBackground
+            // Used to update the progress indicator
+            mPb.setProgress(values[0]);
+
+        }
+
+        protected void onPostExecute(Bitmap result) {
+            // This method is executed in the UIThread
+            // with access to the result of the long running task
+            this.bmImage.setImageBitmap(result);
+            // Hide the progress bar
+            mPb.setVisibility(ProgressBar.INVISIBLE);
+        }
+
+        private String parseParams(String res){
+            String parStr="";
+            int ix;
+
+            ix = res.indexOf("UM_SYYYY=");
+            parStr+=res.substring(ix+10,ix+14);
+
+            ix = res.indexOf("UM_SMM=");
+            parStr+=res.substring(ix+8,ix+10);
+
+            ix = res.indexOf("UM_SDD=");
+            parStr+=res.substring(ix+8,ix+10);
+
+            ix = res.indexOf("UM_SST");
+            parStr+=res.substring(ix+8,ix+10);
+
+            return parStr;
+        }
     }
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
