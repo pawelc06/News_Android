@@ -278,26 +278,25 @@ containing a value of this type.
         public static final int center=0x7f090005;
         public static final int center_horizontal=0x7f090006;
         public static final int center_vertical=0x7f090007;
-        public static final int clear_action=0x7f090019;
+        public static final int clear_action=0x7f090018;
         public static final int clip_horizontal=0x7f090008;
         public static final int clip_vertical=0x7f090009;
         public static final int end=0x7f09000a;
-        public static final int fetch_action=0x7f090018;
+        public static final int fetch_action=0x7f090017;
         public static final int fill=0x7f09000b;
         public static final int fill_horizontal=0x7f09000c;
         public static final int fill_vertical=0x7f09000d;
         public static final int horizontal=0x7f090000;
-        public static final int imageView1=0x7f090013;
-        public static final int imageView2=0x7f090014;
+        public static final int imageView1=0x7f090012;
+        public static final int imageView2=0x7f090013;
         public static final int left=0x7f09000e;
-        public static final int outTemperatureView=0x7f090015;
-        public static final int progressBarMeteo=0x7f090016;
-        public static final int progressBarPogodynka=0x7f090017;
+        public static final int outTemperatureView=0x7f090014;
+        public static final int progressBarMeteo=0x7f090015;
+        public static final int progressBarPogodynka=0x7f090016;
         public static final int right=0x7f09000f;
         public static final int start=0x7f090010;
         public static final int top=0x7f090011;
         public static final int vertical=0x7f090001;
-        public static final int view=0x7f090012;
     }
     public static final class layout {
         public static final int sample_main=0x7f030000;

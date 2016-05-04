@@ -46,6 +46,8 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLConnection;
 
+
+
 /**
  * Sample application demonstrating how to connect to the network and fetch raw
  * HTML. It uses AsyncTask to do the fetch on a background thread. To establish
@@ -69,6 +71,7 @@ public class MainActivity extends FragmentActivity {
     private Handler mHandler = new Handler();
     public String meteoURL;
     public boolean appRunning=false;
+    public String resHtml;
 
 
     // Reference to the fragment showing events, so we can clear it with a button
@@ -77,9 +80,12 @@ public class MainActivity extends FragmentActivity {
 
     private void startTimerThread() {
         final Handler handler = new Handler();
+
+
         Runnable runnable = new Runnable() {
             private long startTime = System.currentTimeMillis();
             public void run() {
+
                 while (appRunning) {
                     try {
                         Thread.sleep(180000);
@@ -95,8 +101,11 @@ public class MainActivity extends FragmentActivity {
                             mProgress1.setVisibility(View.INVISIBLE);
                             mProgress2.setVisibility(View.INVISIBLE);
 
+                            DownloadHtmlTask dht= (DownloadHtmlTask) new DownloadHtmlTask(resHtml).execute("http://www.meteo.pl/um/ramka_um_city_pl.php");
 
-                            meteoURL = DateTimeUtil.getDateInURL();
+                            //while(resHtml == null );
+
+                            meteoURL = DateTimeUtil.getDateInURL(resHtml);
 
 
 
@@ -126,7 +135,12 @@ public class MainActivity extends FragmentActivity {
         mProgress2.setVisibility(View.INVISIBLE);
 
 
-        meteoURL = DateTimeUtil.getDateInURL();
+        DownloadHtmlTask dht = (DownloadHtmlTask) new DownloadHtmlTask(resHtml).execute("http://www.meteo.pl/um/ramka_um_city_pl.php");
+
+        //while(resHtml == null );
+
+
+        meteoURL = DateTimeUtil.getDateInURL(resHtml);
 
 
 
@@ -159,8 +173,13 @@ public class MainActivity extends FragmentActivity {
             case R.id.fetch_action:
 
 
+                DownloadHtmlTask dht = (DownloadHtmlTask) new DownloadHtmlTask(resHtml).execute("http://www.meteo.pl/um/ramka_um_city_pl.php");
 
-                meteoURL = DateTimeUtil.getDateInURL();
+                while(resHtml == null );
+
+                meteoURL = DateTimeUtil.getDateInURL(resHtml);
+
+
 
 
 
@@ -236,6 +255,65 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
+
+    private class DownloadHtmlTask extends AsyncTask<String, Void, String> {
+        String url;
+        String  resHtml1;
+
+        DownloadHtmlTask(String  resHtml1) {
+            this.resHtml1 = resHtml1;
+        }
+
+        protected String doInBackground(String... urls) {
+            String url = urls[0];
+            String htmlResponse=null;
+            InputStream in;
+
+            try {
+
+
+                in = new java.net.URL(url).openStream();
+
+
+                Reader reader = null;
+                reader = new InputStreamReader(in, "UTF-8");
+                char[] buffer = new char[4096];
+                reader.read(buffer);
+                htmlResponse = new String(buffer);
+
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return htmlResponse;
+        }
+
+        protected void onPostExecute(String result) {
+
+            resHtml = parseParams(result);
+
+        }
+
+        private String parseParams(String res){
+            String parStr="";
+            int ix;
+
+            ix = res.indexOf("UM_SYYYY=");
+            parStr+=res.substring(ix+10,ix+14);
+
+            ix = res.indexOf("UM_SMM=");
+            parStr+=res.substring(ix+8,ix+10);
+
+            ix = res.indexOf("UM_SDD=");
+            parStr+=res.substring(ix+8,ix+10);
+
+            ix = res.indexOf("UM_SST");
+            parStr+=res.substring(ix+8,ix+10);
+
+            return parStr;
+        }
+
+    }
 
     private class DownloadImageTask extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;
