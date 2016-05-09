@@ -46,11 +46,11 @@ int id bottom 0x7f090004
 int id center 0x7f090005
 int id center_horizontal 0x7f090006
 int id center_vertical 0x7f090007
-int id clear_action 0x7f090018
+int id clear_action 0x7f090019
 int id clip_horizontal 0x7f090008
 int id clip_vertical 0x7f090009
 int id end 0x7f09000a
-int id fetch_action 0x7f090017
+int id fetch_action 0x7f090018
 int id fill 0x7f09000b
 int id fill_horizontal 0x7f09000c
 int id fill_vertical 0x7f09000d
@@ -59,6 +59,7 @@ int id imageView1 0x7f090012
 int id imageView2 0x7f090013
 int id left 0x7f09000e
 int id outTemperatureView 0x7f090014
+int id paramTextView 0x7f090017
 int id progressBarMeteo 0x7f090015
 int id progressBarPogodynka 0x7f090016
 int id right 0x7f09000f

@@ -71,7 +71,8 @@ public class MainActivity extends FragmentActivity {
     private Handler mHandler = new Handler();
     public String meteoURL;
     public boolean appRunning=false;
-    public String resHtml;
+    public String resHtml,voltage,lTimestamp;
+    public TempSensorData tsd1;
 
 
     // Reference to the fragment showing events, so we can clear it with a button
@@ -111,6 +112,8 @@ public class MainActivity extends FragmentActivity {
 
                             new GetTempTask((TextView) findViewById(R.id.outTemperatureView)) .execute("http://192.168.0.120/gettemp.cgi?format=json");
 
+
+
                         }
                     });
                 }
@@ -131,11 +134,16 @@ public class MainActivity extends FragmentActivity {
         mProgress2.setVisibility(View.INVISIBLE);
 
 
+
         new DownloadImageTaskFromHtml((ImageView) findViewById(R.id.imageView1),mProgress1).execute("http://www.meteo.pl/um/ramka_um_city_pl.php");
 
         new DownloadImageTaskProgress((ImageView) findViewById(R.id.imageView2),mProgress2) .execute("http://pogodynka.pl/http/assets/products/main_page_maps/day_v2_radarmode_0000-00-00d.jpg#0.007399700165709233");
 
+
+
         new GetTempTask((TextView) findViewById(R.id.outTemperatureView)) .execute("http://192.168.0.120/gettemp.cgi?format=json");
+
+        new GetParamsTask((TextView) findViewById(R.id.paramTextView)) .execute("http://192.168.0.120/gettemp.cgi?format=json");
 
         appRunning = true;
         this.startTimerThread();
@@ -179,8 +187,72 @@ public class MainActivity extends FragmentActivity {
     }
 
 
+    private class GetParamsTask extends AsyncTask<String, Void, String> {
+        TextView txtView;
+        String paramStr = null;
+
+        public GetParamsTask(TextView tv) {
+            this.txtView = tv;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            TextView tv = (TextView) findViewById(R.id.outTemperatureView);
+            tv.setText("Odbieram dane...");
+
+        }
+
+        protected String doInBackground(String... urls) {
+            String urldisplay = urls[0];
+
+            String paramsStr = null;
+
+            String volStr = null;
+            String dateStr=null;
+            String internalTemp;
+            String lastFrameTimestamp;
+            InputStream in;
+            TempSensorData tsd;
+
+            try {
+                in = new java.net.URL(urldisplay).openStream();
+
+                /*
+                Reader reader = null;
+                reader = new InputStreamReader(in, "UTF-8");
+                char[] buffer = new char[100];
+                reader.read(buffer);
+                tempJson = new String(buffer);
+                */
+                tsd = JsonTempParser.parseData(in);
+
+                //dateStr = tsd.getTimeStamp();
+
+                lastFrameTimestamp = tsd.getLastFrameTimestamp();
+
+                volStr = tsd.getVoltage();
+
+                paramStr = lastFrameTimestamp + "   Bat:" + volStr + "V";
+
+
+            } catch (Exception e) {
+                Log.e("Error", e.getMessage());
+                e.printStackTrace();
+            }
+            return paramStr;
+        }
+
+        protected void onPostExecute(String result) {
+            txtView.setText(result);
+
+        }
+    }
+
+
     private class GetTempTask extends AsyncTask<String, Void, String> {
         TextView txtView;
+        String paramStr = null;
 
         public GetTempTask(TextView tv) {
             this.txtView = tv;
@@ -198,8 +270,11 @@ public class MainActivity extends FragmentActivity {
             String urldisplay = urls[0];
             String tempJson = null;
             String tempStr = null;
+
             String volStr = null;
             String dateStr=null;
+            String internalTemp;
+            String lastFrameTimestamp;
             InputStream in;
             TempSensorData tsd;
 
@@ -217,7 +292,11 @@ public class MainActivity extends FragmentActivity {
                 tempStr = tsd.getTemp();
                 volStr = tsd.getVoltage();
                 dateStr = tsd.getTimeStamp();
-                tempStr = "Temp: " + tempStr + " \u00b0C                  Bat:" + volStr + "\r\n"+dateStr;
+                internalTemp = tsd.getInternalTemp();
+                lastFrameTimestamp = tsd.getLastFrameTimestamp();
+                tempStr = "Balkon: " + tempStr + " \u00b0C\r\n";
+                tempStr += "Salon:   +" +internalTemp  + " \u00b0C\n";
+                paramStr = lastFrameTimestamp + "   Bat:" + volStr;
 
 
             } catch (Exception e) {
@@ -229,6 +308,7 @@ public class MainActivity extends FragmentActivity {
 
         protected void onPostExecute(String result) {
             txtView.setText(result);
+
         }
     }
 

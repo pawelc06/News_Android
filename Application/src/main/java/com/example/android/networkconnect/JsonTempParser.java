@@ -42,7 +42,8 @@ public class JsonTempParser {
         tempData.setTemp(jsonObjTemp.getString("temp"));
         tempData.setVoltage(jsonObjTemp.getString("voltage"));
         tempData.setTimeStamp(jsonObjTemp.getString("serverTime"));
-
+        tempData.setInternalTemp(jsonObjTemp.getString("inTemp"));
+        tempData.setLastFrameTimestamp(jsonObjTemp.getString("lastFrameTimestamp"));
 
         return tempData;
     }

@@ -8,6 +8,14 @@ public class TempSensorData {
     private String voltage;
     private String timeStamp;
 
+
+
+    private String internalTemp;
+
+
+
+    private String lastFrameTimestamp;
+
     public TempSensorData() {
 
     }
@@ -16,6 +24,22 @@ public class TempSensorData {
         this.temp = temp;
         this.voltage = voltage;
         this.timeStamp = timeStamp;
+    }
+
+    public String getLastFrameTimestamp() {
+        return lastFrameTimestamp;
+    }
+
+    public void setLastFrameTimestamp(String lastFrameTimestamp) {
+        this.lastFrameTimestamp = lastFrameTimestamp;
+    }
+
+    public String getInternalTemp() {
+        return internalTemp;
+    }
+
+    public void setInternalTemp(String internalTemp) {
+        this.internalTemp = internalTemp;
     }
 
     public String getTemp() {
