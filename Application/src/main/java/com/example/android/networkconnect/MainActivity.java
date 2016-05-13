@@ -112,6 +112,8 @@ public class MainActivity extends FragmentActivity {
 
                             new GetTempTask((TextView) findViewById(R.id.outTemperatureView)) .execute("http://192.168.0.120/gettemp.cgi?format=json");
 
+                            new GetParamsTask((TextView) findViewById(R.id.paramTextView)) .execute("http://192.168.0.120/gettemp.cgi?format=json");
+
 
 
                         }
@@ -177,6 +179,8 @@ public class MainActivity extends FragmentActivity {
 
                 new GetTempTask((TextView) findViewById(R.id.outTemperatureView)).execute("http://192.168.0.120/gettemp.cgi?format=json");
 
+                new GetParamsTask((TextView) findViewById(R.id.paramTextView)) .execute("http://192.168.0.120/gettemp.cgi?format=json");
+
                 return true;
             // Clear the log view fragment.
             case R.id.clear_action:
@@ -198,7 +202,7 @@ public class MainActivity extends FragmentActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            TextView tv = (TextView) findViewById(R.id.outTemperatureView);
+            TextView tv = (TextView) findViewById(R.id.paramTextView);
             tv.setText("Odbieram dane...");
 
         }
