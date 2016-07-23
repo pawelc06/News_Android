@@ -1,3 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<items version="2" />
+<items version="2" >
 
+    <item
+        jar="D:\android_studio_workspace\NetworkConnect\Application\build\intermediates\exploded-aar\com.android.support\support-v4\24.0.0\jars\classes.jar"
+        jumboMode="true"
+        revision="24.0.0"
+        sha1="2f7e6e2dad1bccaf68a8820820adc6c0d5b96d37">
+        <dex dex="D:\android_studio_workspace\NetworkConnect\Application\build\intermediates\pre-dexed\debug\com.android.support-support-v4-24.0.0_98e3b0ca75c157457140808efb29ffc60f6e6535.jar" />
+    </item>
+    <item
+        jar="D:\android_studio_workspace\NetworkConnect\Application\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\24.0.0\jars\classes.jar"
+        jumboMode="true"
+        revision="24.0.0"
+        sha1="3bd97cfefd783e9de1dd1c30574a6adb44b4409b">
+        <dex dex="D:\android_studio_workspace\NetworkConnect\Application\build\intermediates\pre-dexed\debug\com.android.support-support-vector-drawable-24.0.0_031e60f9845efe309327d9f3afbb8930b938c624.jar" />
+    </item>
+    <item
+        jar="D:\android_studio_workspace\NetworkConnect\Application\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        revision="24.0.0"
+        sha1="29bb5eb6bdfea9cb5b3988f304e05ee7aa3d2d18">
+        <dex dex="D:\android_studio_workspace\NetworkConnect\Application\build\intermediates\pre-dexed\debug\instant-run-bootstrap_fc554abbe8bfb57429898e994c4a27f7c61196cc.jar" />
+    </item>
+    <item
+        jar="D:\android_studio_workspace\NetworkConnect\Application\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\24.0.0\jars\classes.jar"
+        jumboMode="true"
+        revision="24.0.0"
+        sha1="894922f67adeaaef51f077a29e315da21a3382d3">
+        <dex dex="D:\android_studio_workspace\NetworkConnect\Application\build\intermediates\pre-dexed\debug\com.android.support-recyclerview-v7-24.0.0_d4cda02cca1c87c0da12d297b19876e3f0edeab0.jar" />
+    </item>
+    <item
+        jar="D:\android_studio_workspace\NetworkConnect\Application\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\24.0.0\jars\classes.jar"
+        jumboMode="true"
+        revision="24.0.0"
+        sha1="e70f608219ed6b974644c333249ab2bb7b71de98">
+        <dex dex="D:\android_studio_workspace\NetworkConnect\Application\build\intermediates\pre-dexed\debug\com.android.support-animated-vector-drawable-24.0.0_63c75f2207e62c297b6fba8f9234b7a3cf41c96f.jar" />
+    </item>
+    <item
+        jar="D:\android_studio_workspace\NetworkConnect\Application\build\intermediates\exploded-aar\com.android.support\cardview-v7\24.0.0\jars\classes.jar"
+        jumboMode="true"
+        revision="24.0.0"
+        sha1="8dd49930e4f9dde1a42d37e362b9fea8b1b69c0d">
+        <dex dex="D:\android_studio_workspace\NetworkConnect\Application\build\intermediates\pre-dexed\debug\com.android.support-cardview-v7-24.0.0_c46d09b2e473668871bc8e9ef98b6bb1fe0b2cc7.jar" />
+    </item>
+    <item
+        jar="C:\Users\Paweł\.gradle\caches\modules-2\files-2.1\com.android.support\support-annotations\24.0.0\2943c74db6d4346ab8c6531adac91fa05c137c40\support-annotations-24.0.0.jar"
+        jumboMode="true"
+        revision="24.0.0"
+        sha1="2943c74db6d4346ab8c6531adac91fa05c137c40">
+        <dex dex="D:\android_studio_workspace\NetworkConnect\Application\build\intermediates\pre-dexed\debug\support-annotations-24.0.0_13d3c081134460f63ee5df54f1fb5a7bd71b14e9.jar" />
+    </item>
+    <item
+        jar="D:\android_studio_workspace\NetworkConnect\Application\build\intermediates\exploded-aar\com.android.support\support-v4\24.0.0\jars\libs\internal_impl-24.0.0.jar"
+        jumboMode="true"
+        revision="24.0.0"
+        sha1="fcaf463e10e69c1923ccf1edeba3b4196d239e00">
+        <dex dex="D:\android_studio_workspace\NetworkConnect\Application\build\intermediates\pre-dexed\debug\internal_impl-24.0.0_eae0b030432d1ce6bbfa3488166497771d026342.jar" />
+    </item>
+    <item
+        jar="D:\android_studio_workspace\NetworkConnect\Application\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        revision="24.0.0"
+        sha1="7826ef0d2d898e83f107108f6e9968ff5aaa949e">
+        <dex dex="D:\android_studio_workspace\NetworkConnect\Application\build\intermediates\pre-dexed\debug\instant-run_3f0e0373d1a044340ad78884633ec051462d0d82.jar" />
+    </item>
+    <item
+        jar="D:\android_studio_workspace\NetworkConnect\Application\build\intermediates\exploded-aar\com.android.support\design\24.0.0\jars\classes.jar"
+        jumboMode="true"
+        revision="24.0.0"
+        sha1="fc29308a7a8f6d4407b34634eb48fb8b817f9b23">
+        <dex dex="D:\android_studio_workspace\NetworkConnect\Application\build\intermediates\pre-dexed\debug\com.android.support-design-24.0.0_1278402b4ecf0e1d031d94e69dccf1dce54c9733.jar" />
+    </item>
+    <item
+        jar="D:\android_studio_workspace\NetworkConnect\Application\build\intermediates\exploded-aar\com.android.support\gridlayout-v7\24.0.0\jars\classes.jar"
+        jumboMode="true"
+        revision="24.0.0"
+        sha1="ec26ade997fbf2643d8c25cee7a9d1adecb3478d">
+        <dex dex="D:\android_studio_workspace\NetworkConnect\Application\build\intermediates\pre-dexed\debug\com.android.support-gridlayout-v7-24.0.0_54c5ca48fc339f86177a24392061af0bbb5b6cf4.jar" />
+    </item>
+    <item
+        jar="D:\android_studio_workspace\NetworkConnect\Application\build\intermediates\exploded-aar\com.android.support\appcompat-v7\24.0.0\jars\classes.jar"
+        jumboMode="true"
+        revision="24.0.0"
+        sha1="0874286cc2fd88d54fdf130e9d5372730da6de97">
+        <dex dex="D:\android_studio_workspace\NetworkConnect\Application\build\intermediates\pre-dexed\debug\com.android.support-appcompat-v7-24.0.0_28e310ac1bc69eda8df2721f3ef0c7c4c2bd4e68.jar" />
+    </item>
+
+</items>

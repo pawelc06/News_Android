@@ -22,8 +22,8 @@
  <!-- Min/target SDK versions (<uses-sdk>) managed by build.gradle -->
     <uses-sdk
         android:maxSdkVersion="15"
-        android:minSdkVersion="8"
-        android:targetSdkVersion="23" />
+        android:minSdkVersion="15"
+        android:targetSdkVersion="15" />
 
 <!--     Specifies the instrumentation test runner used to run the tests. -->
     <instrumentation

@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
  Copyright 2013 The Android Open Source Project
 
  Licensed under the Apache License, Version 2.0 (the "License");
@@ -14,11 +13,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -->
-
-
-
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.android.networkconnect"
     android:versionCode="1"
     android:versionName="1.0">
@@ -28,20 +23,21 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:label="Aktualności"
+        android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
-        android:theme="@style/Theme.Sample"
-        android:allowBackup="true">
-
+        android:label="Aktualności"
+        android:theme="@style/Theme.Sample">
         <activity
-            android:name="com.example.android.networkconnect.MainActivity"
+            android:name=".MainActivity"
             android:label="Aktualności"
             android:uiOptions="splitActionBarWhenNarrow">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
+
 </manifest>

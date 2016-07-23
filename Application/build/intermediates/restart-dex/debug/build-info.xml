@@ -3,22 +3,27 @@
     abi="armeabi-v7a,armeabi"
     api-level="15"
     format="7"
-    timestamp="508116996922" >
+    timestamp="4935674147063"
+    token="67432619293765678" >
 
     <task
         name="javac"
-        duration="271" />
+        duration="1190" />
     <task
         name="instant-run-dex"
         duration="0" />
     <task
         name="instant-run-transform"
-        duration="76" />
+        duration="498" />
     <task
         name="verifier"
-        duration="44" />
+        duration="161" />
 
-    <build timestamp="9340551537835" >
+    <artifact
+        location="D:\android_studio_workspace\NetworkConnect\Application\build\outputs\apk\Application-debug.apk"
+        type="MAIN" />
+
+    <build timestamp="4935674147063" >
         <artifact
             location="D:\android_studio_workspace\NetworkConnect\Application\build\outputs\apk\Application-debug.apk"
             type="MAIN" />
