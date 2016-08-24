@@ -30,40 +30,57 @@ import java.util.List;
 public class SensorsListFragment extends ListFragment implements AdapterView.OnItemClickListener {
     private List exampleListItemList; // at the top of your fragment list
    View view;
+    public boolean appRunning=false;
+
+    private void startTimerThread2() {
+        final Handler handler = new Handler();
+
+
+        Runnable runnable = new Runnable() {
+            private long startTime = System.currentTimeMillis();
+            public void run() {
+
+                while (appRunning) {
+                    try {
+                        Thread.sleep(10000);
+                    }
+                    catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                    handler.post(new Runnable(){
+                        public void run() {
+
+
+                            new GetSensorsDataTask(view).execute("http://192.168.0.120/gettemp.cgi?format=json");
+
+
+
+
+
+                        }
+                    });
+                }
+            }
+        };
+        new Thread(runnable).start();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.sensor_list_fragment, container, false);
 
         new GetSensorsDataTask(view).execute("http://192.168.0.120/gettemp.cgi?format=json");
+        appRunning = true;
+        this.startTimerThread2();
 
+        Log.i("LISTSENSORS","startTimerThread");
         return view;
     }
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        //ArrayAdapter adapter = ArrayAdapter.createFromResource(getActivity(), R.array.Planets, android.R.layout.simple_list_item_1);
 
-        /*
-        SensorData tsd1 = new SensorData(1,"Balkon",25.7f,53.3f,3.11f, Timestamp.valueOf("2016-07-13 20:22:22"));
-        SensorData tsd2 = new SensorData(2,"Pokój Kasi",25.0f,53.3f,3.11f, Timestamp.valueOf("2016-07-14 20:22:22"));
-        SensorData tsd3 = new SensorData(3,"Pokój Basi",22.0f,53.3f,3.11f, Timestamp.valueOf("2016-07-14 20:22:22"));
-        SensorData tsd4 = new SensorData(4,"Sypialnia",24.3f,53.3f,3.11f, Timestamp.valueOf("2016-07-14 20:22:22"));
-
-
-        exampleListItemList = new ArrayList();
-        exampleListItemList.add(tsd1);
-        exampleListItemList.add(tsd2);
-        exampleListItemList.add(tsd3);
-        exampleListItemList.add(tsd4);
-        SensorDataListAdapter  mAdapter = new SensorDataListAdapter(getActivity(),R.layout.sensor_row_layout, exampleListItemList);
-
-
-
-        setListAdapter(mAdapter);
-        getListView().setOnItemClickListener(this);
-        */
     }
 
     @Override
@@ -83,7 +100,7 @@ public class SensorsListFragment extends ListFragment implements AdapterView.OnI
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-
+            Log.i("LISTSENSORS","PRE");
 
         }
 
@@ -127,7 +144,7 @@ public class SensorsListFragment extends ListFragment implements AdapterView.OnI
             SensorDataListAdapter  mAdapter = new SensorDataListAdapter(getActivity(),R.layout.sensor_row_layout, result);
 
 
-
+            Log.i("LISTSENSORS","POST");
             setListAdapter(mAdapter);
 
 
