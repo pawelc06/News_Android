@@ -1,0 +1,10 @@
+CHANGED,D:\android_studio_workspace\NetworkConnect\Application\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\example\android\networkconnect\R$style$override.class
+CHANGED,D:\android_studio_workspace\NetworkConnect\Application\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\example\android\networkconnect\R$menu$override.class
+CHANGED,D:\android_studio_workspace\NetworkConnect\Application\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\example\android\networkconnect\R$layout$override.class
+CHANGED,D:\android_studio_workspace\NetworkConnect\Application\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\example\android\networkconnect\WeatherFragment$override.class
+CHANGED,D:\android_studio_workspace\NetworkConnect\Application\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\example\android\networkconnect\R$integer$override.class
+CHANGED,D:\android_studio_workspace\NetworkConnect\Application\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\example\android\networkconnect\R$string$override.class
+CHANGED,D:\android_studio_workspace\NetworkConnect\Application\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\example\android\networkconnect\R$id$override.class
+CHANGED,D:\android_studio_workspace\NetworkConnect\Application\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\example\android\networkconnect\R$styleable$override.class
+CHANGED,D:\android_studio_workspace\NetworkConnect\Application\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\android\tools\fd\runtime\AppPatchesLoaderImpl.class
+CHANGED,D:\android_studio_workspace\NetworkConnect\Application\build\intermediates\transforms\instantRun\debug\folders\4000\5\enhanced\com\example\android\networkconnect\SensorDataListAdapter$override.class

@@ -30,6 +30,9 @@ import java.util.List;
 public class SensorsListFragment extends ListFragment implements AdapterView.OnItemClickListener {
     private List exampleListItemList; // at the top of your fragment list
    View view;
+    private ProgressBar mProgress1;
+    private int mProgressStatus1 = 0;
+
     public boolean appRunning=false;
 
     private void startTimerThread2() {
@@ -51,7 +54,7 @@ public class SensorsListFragment extends ListFragment implements AdapterView.OnI
                         public void run() {
 
 
-                            new GetSensorsDataTask(view).execute("http://192.168.0.120/gettemp.cgi?format=json");
+                            new GetSensorsDataTask(view,mProgress1).execute("http://192.168.0.120/gettemp.cgi?format=json");
 
 
 
@@ -69,7 +72,10 @@ public class SensorsListFragment extends ListFragment implements AdapterView.OnI
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.sensor_list_fragment, container, false);
 
-        new GetSensorsDataTask(view).execute("http://192.168.0.120/gettemp.cgi?format=json");
+        //progressBarSensorList
+        mProgress1 = (ProgressBar) view.findViewById(R.id.progressBarSensorList);
+
+        new GetSensorsDataTask(view,mProgress1).execute("http://192.168.0.120/gettemp.cgi?format=json");
         appRunning = true;
         this.startTimerThread2();
 
@@ -92,15 +98,17 @@ public class SensorsListFragment extends ListFragment implements AdapterView.OnI
         View viewTask;
         String sensorsDataTxt = null;
         List<SensorData> listOfSensorData;
+        ProgressBar mPb;
 
-        public GetSensorsDataTask(View tv) {
+        public GetSensorsDataTask(View tv, ProgressBar pb) {
             this.viewTask = tv;
+            this.mPb = pb;
         }
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            Log.i("LISTSENSORS","PRE");
+            mPb.setVisibility(View.VISIBLE);
 
         }
 
@@ -141,8 +149,9 @@ public class SensorsListFragment extends ListFragment implements AdapterView.OnI
         }
 
         protected void onPostExecute(List<SensorData> result) {
-            SensorDataListAdapter  mAdapter = new SensorDataListAdapter(getActivity(),R.layout.sensor_row_layout, result);
 
+            SensorDataListAdapter  mAdapter = new SensorDataListAdapter(getActivity(),R.layout.sensor_row_layout, result);
+            mPb.setVisibility(ProgressBar.INVISIBLE);
 
             Log.i("LISTSENSORS","POST");
             setListAdapter(mAdapter);
