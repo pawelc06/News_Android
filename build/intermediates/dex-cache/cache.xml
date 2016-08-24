@@ -19,7 +19,7 @@
         jar="D:\android_studio_workspace\NetworkConnect\Application\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
         jumboMode="true"
         revision="24.0.0"
-        sha1="29bb5eb6bdfea9cb5b3988f304e05ee7aa3d2d18">
+        sha1="b8e6e124591ea76055f008b0add68f567d722cd0">
         <dex dex="D:\android_studio_workspace\NetworkConnect\Application\build\intermediates\pre-dexed\debug\instant-run-bootstrap_fc554abbe8bfb57429898e994c4a27f7c61196cc.jar" />
     </item>
     <item
@@ -61,7 +61,7 @@
         jar="D:\android_studio_workspace\NetworkConnect\Application\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
         jumboMode="true"
         revision="24.0.0"
-        sha1="7826ef0d2d898e83f107108f6e9968ff5aaa949e">
+        sha1="d39501d5d38516d2c0a6504cf694acab56a89b10">
         <dex dex="D:\android_studio_workspace\NetworkConnect\Application\build\intermediates\pre-dexed\debug\instant-run_3f0e0373d1a044340ad78884633ec051462d0d82.jar" />
     </item>
     <item

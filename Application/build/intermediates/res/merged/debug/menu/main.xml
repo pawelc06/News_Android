@@ -14,11 +14,13 @@
   limitations under the License.
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res">
-    <item android:id="@+id/fetch_action"
+<menu xmlns:android="http://schemas.android.com/apk/res"
+    xmlns:android1="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/fetch_action" android1:title="@string/fetch_text"
         android:showAsAction="ifRoom|withText"
         android:title="Odśwież" />
     <item android:id="@+id/switch_layout_action"
+        android1:title="@string/clear_text"
         android:showAsAction="ifRoom|withText"
         android:title="Czujniki" />
 </menu>

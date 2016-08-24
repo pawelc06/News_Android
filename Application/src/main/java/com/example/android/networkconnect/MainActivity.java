@@ -21,7 +21,6 @@ public class MainActivity extends AppCompatActivity implements NewsFragment.OnFr
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.addTab(tabLayout.newTab().setText("Pogoda"));
-        tabLayout.addTab(tabLayout.newTab().setText("Czujniki"));
         tabLayout.addTab(tabLayout.newTab().setText("Lista"));
         tabLayout.addTab(tabLayout.newTab().setText("Wiadomości"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
